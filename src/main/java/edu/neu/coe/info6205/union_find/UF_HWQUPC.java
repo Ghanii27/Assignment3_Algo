@@ -8,6 +8,7 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+
 import java.util.Scanner;
 
 /**
@@ -83,14 +84,12 @@ public class UF_HWQUPC implements UF {
         validate(p);
         int root = p;
         // FIXME
-       while (root != parent[root]) {
-           doPathCompression(root);
-           root = parent[root];
-       }
-
+        while (root != parent[root]) {
+            doPathCompression(root);
+            root = parent[root];
+        }
+        // END 
         return root;
-
-        // END
     }
 
     /**
@@ -171,13 +170,12 @@ public class UF_HWQUPC implements UF {
     }
 
     private final int[] parent;   // parent[i] = parent of i
-    private final int[] height;   // height[i] = height of subtree rooted at i
+    private final int[] height;   // h  eight[i] = height of subtree rooted at i
     public int count;  // number of components
     private boolean pathCompression;
 
     private void mergeComponents(int i, int j) {
         // FIXME make shorter root point to taller one
-
         if(i==j) return;
         if(height[i] < height[j]){
             updateHeight(j,i);
@@ -186,41 +184,34 @@ public class UF_HWQUPC implements UF {
         else if(height[i] > height[j])    {
             updateHeight(i,j);
             updateParent(j,i);
-            }
-        else{
-                updateParent(j,i);
-                height[i]++;
-            }
         }
-
-
+        else{
+            updateParent(j,i);
+            height[i]++;
+        }
+    }
         // END 
 
-
+//////
     /**
      * This implements the single-pass path-halving mechanism of path compression
      */
     private void doPathCompression(int i) {
         // FIXME update parent to value of grandparent
-
-         parent[i]=parent[parent[i]];
-        // END 
+        parent[i] = parent[parent[i]];
+        // END
     }
-
-
-    public static void main(String[] args) {
-        Scanner StdIn = new Scanner(System.in);
-        int n = StdIn.nextInt();
-        UF_HWQUPC uf = new UF_HWQUPC(n,true);
-        while (StdIn.hasNext()) {
-            int p = (StdIn.nextInt());
-            int q = (StdIn.nextInt());
-            if (uf.find(p) == uf.find(q)) continue;
-            uf.union(p, q);
-            System.out.println(p + " " + q);
-        }
-        System.out.println(uf.count + " connections");
+        public static void main(String[] args) {
+            Scanner StdIn = new Scanner(System.in);
+            int n = StdIn.nextInt();
+            UF_HWQUPC uf = new UF_HWQUPC(n,true);
+            while (StdIn.hasNext()) {
+                int p = (StdIn.nextInt());
+                int q = (StdIn.nextInt());
+                if (uf.find(p) == uf.find(q)) continue;
+                uf.union(p, q);
+                System.out.println(p + " " + q);
+            }
+            System.out.println(uf.count + " connections");
     }
 }
-
-

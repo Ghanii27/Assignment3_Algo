@@ -16,41 +16,70 @@ import java.util.concurrent.ForkJoinPool;
  */
 public class Main {
 
+
     public static void main(String[] args) {
         processArgs(args);
         System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
         Random random = new Random();
-        int[] array = new int[2000000];
+        int[] array = new int[8000000];
         ArrayList<Long> timeList = new ArrayList<>();
-        for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
-            // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
-            long time;
-            long startTime = System.currentTimeMillis();
-            for (int t = 0; t < 10; t++) {
-                for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
-                ParSort.sort(array, 0, array.length);
+
+
+        for( int m = 1; m <= 32; m = m*2) {
+            ParSort.threadCount = m;
+            ParSort.threadFJP = new ForkJoinPool(ParSort.threadCount);
+            String seriesName = "" + m + " Threads";
+//            XYSeries timeSeries = new XYSeries(seriesName);
+            double min = 99999;
+            int minCutoff = 0;
+            double avg = 0;
+
+
+
+            for (int n = 240; n <= 8000; n=n*2) {
+                ParSort.cutoff = 1000 * (n);
+                // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
+                long time;
+                long startTime = System.currentTimeMillis();
+                for (int t = 0; t < 10; t++) {
+                    for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
+                    ParSort.sort(array, 0, array.length);
+                }
+
+
+                long endTime = System.currentTimeMillis();
+                time = (endTime - startTime);
+                avg += time/10;
+                if(time/10 < min){
+                    minCutoff = 10000 * (n + 1);
+                    min = time/10;
+                }
+                timeList.add(time);
+
+
+                System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+
             }
-            long endTime = System.currentTimeMillis();
-            time = (endTime - startTime);
-            timeList.add(time);
-
-
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+            System.out.println("For threads " + m + " min is = " + min + " at cutoff " + minCutoff + "ms and average is = " + avg/50+"ms");
 
         }
+
+
+
         try {
             FileOutputStream fis = new FileOutputStream("./src/result.csv");
             OutputStreamWriter isr = new OutputStreamWriter(fis);
             BufferedWriter bw = new BufferedWriter(isr);
-            int j = 0;
+            int n = 0;
             for (long i : timeList) {
-                String content = (double) 10000 * (j + 1) / 2000000 + "," + (double) i / 10 + "\n";
-                j++;
+                String content = (double) 10000 * (n + 1) / 2000000 + "," + (double) i / 10 + "\n";
+                n++;
                 bw.write(content);
                 bw.flush();
             }
             bw.close();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -70,6 +99,8 @@ public class Main {
         return result;
     }
 
+
+
     private static void processCommand(String x, String y) {
         if (x.equalsIgnoreCase("N")) setConfig(x, Integer.parseInt(y));
         else
@@ -87,3 +118,5 @@ public class Main {
 
 
 }
+
+

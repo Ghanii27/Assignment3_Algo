@@ -21,7 +21,6 @@ public class Timer {
      * @param function a function which yields a T (T may be Void).
      * @return the average milliseconds per repetition.
      */
-
     public <T> double repeat(int n, Supplier<T> function) {
         for (int i = 0; i < n; i++) {
             function.get();
@@ -56,17 +55,15 @@ public class Timer {
     public <T, U> double repeat(int n, Supplier<T> supplier, Function<T, U> function, UnaryOperator<T> preFunction, Consumer<U> postFunction) {
         logger.trace("repeat: with " + n + " runs");
         // FIXME: note that the timer is running when this method is called and should still be running when it returns. by replacing the following code
-        T t = supplier.get();
-
-        for (int i = 0; i < n; i++) {
-
+        T t= supplier.get();
+        for (int i=0; i<n; i++){
             function.apply(t);
             lap();
         }
         pause();
         return meanLapTime();
-
-      }
+        // END 
+    }
 
     /**
      * Stop this Timer and return the mean lap time in milliseconds.
@@ -88,7 +85,6 @@ public class Timer {
     public double meanLapTime() {
         if (running) throw new TimerException();
         return toMillisecs(ticks) / laps;
-
     }
 
     /**
@@ -99,9 +95,7 @@ public class Timer {
      */
     public void pauseAndLap() {
         lap();
-
         ticks += getClock();
-
         running = false;
     }
 
@@ -114,7 +108,6 @@ public class Timer {
         if (running) throw new TimerException();
         ticks -= getClock();
         running = true;
-
     }
 
     /**
@@ -187,9 +180,9 @@ public class Timer {
      * @return the number of ticks for the system clock. Currently defined as nano time.
      */
     private static long getClock() {
-
-        return System.nanoTime();
-
+        // FIXME by replacing the following code
+         return System.nanoTime();
+        // END 
     }
 
     /**
@@ -201,10 +194,8 @@ public class Timer {
      */
     private static double toMillisecs(long ticks) {
         // FIXME by replacing the following code
-         double nanoToMilli = Math.pow(10,6);
-        // System.out.println(ticks+" Ticks ");
-       // System.out.println((ticks/nanoToMilli) + " return ");
-         return ticks/nanoToMilli ;
+        double nanoToMilli = Math.pow(10,6);
+         return ticks/nanoToMilli;
         // END 
     }
 

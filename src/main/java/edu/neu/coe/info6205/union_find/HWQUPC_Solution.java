@@ -1,5 +1,4 @@
 package edu.neu.coe.info6205.union_find;
-
 import edu.neu.coe.info6205.graphs.BFS_and_prims.StdRandom;
 
 public class HWQUPC_Solution {
@@ -14,12 +13,9 @@ public class HWQUPC_Solution {
             edges++;
         }
         return edges;
-
     }
 
-
-
-
+    ///////////////////////////
     private static int sum(int[] a) {
 
         int sum = 0;
@@ -29,24 +25,23 @@ public class HWQUPC_Solution {
         return sum;
     }
 
-
+/////////////////////////
     public static double mean(int[] a) {
         int sum = sum(a);
         return 1.0 * sum / a.length;
     }
 
 
-
-
     public static void main(String[] args) {
-        int n = 102400;
+        int n = 10000;
         int trials = 1000;
         int[] edges = new int[trials];
         // repeat the experiment
         for (int t = 0; t < trials; t++) {
             edges[t] = count(n);
         }
-        System.out.println("no of objects = " + n);
-        System.out.println("average no of pairs generated      = " + mean(edges));
+        System.out.println("Count of objects = " + n);
+        System.out.println("No of pairs generated   = " + mean(edges));
     }
 }
+

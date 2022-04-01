@@ -17,9 +17,9 @@ public class TimerTest {
     @Test
     public void testStop() {
         final Timer timer = new Timer();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         final double time = timer.stop();
-        assertEquals(ONETH, time, 100);
+        assertEquals(TENTH_DOUBLE, time, 100);
         assertEquals(1, run);
         assertEquals(1, new PrivateMethodTester(timer).invokePrivate("getLaps"));
     }
@@ -28,10 +28,10 @@ public class TimerTest {
     public void testPauseAndLap() {
         final Timer timer = new Timer();
         final PrivateMethodTester privateMethodTester = new PrivateMethodTester(timer);
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.pauseAndLap();
         final Long ticks = (Long) privateMethodTester.invokePrivate("getTicks");
-        assertEquals(ONETH, ticks / 1e6, 20);
+        assertEquals(TENTH_DOUBLE, ticks / 1e6, 20);
         assertFalse((Boolean) privateMethodTester.invokePrivate("isRunning"));
         assertEquals(1, privateMethodTester.invokePrivate("getLaps"));
     }
@@ -50,36 +50,36 @@ public class TimerTest {
     @Test
     public void testPauseAndLapResume1() {
         final Timer timer = new Timer();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.pauseAndLap();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.resume();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         final double time = timer.stop();
-        assertEquals(ONETH, time, 100.0);
+        assertEquals(TENTH_DOUBLE, time, 100.0);
         assertEquals(3, run);
     }
 
     @Test
     public void testLap() {
         final Timer timer = new Timer();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.lap();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         final double time = timer.stop();
-        assertEquals(ONETH, time, 100.0);
+        assertEquals(TENTH_DOUBLE, time, 100.0);
         assertEquals(2, run);
     }
 
     @Test
     public void testPause() {
         final Timer timer = new Timer();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.pause();
-        GoToSleep(ONETH, 0);
+        GoToSleep(TENTH, 0);
         timer.resume();
         final double time = timer.stop();
-        assertEquals(ONETH, time, 100.0);
+        assertEquals(TENTH_DOUBLE, time, 100.0);
         assertEquals(2, run);
     }
 
@@ -98,7 +98,6 @@ public class TimerTest {
         final Timer timer = new Timer();
         final double mean = timer.repeat(250, () -> {
             GoToSleep(TENTH, 0);
-
             return null;
         });
         assertEquals(250, new PrivateMethodTester(timer).invokePrivate("getLaps"));

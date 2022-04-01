@@ -3,7 +3,6 @@ package edu.neu.coe.info6205.sort;
 
 import edu.neu.coe.info6205.util.Utilities;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -49,7 +48,7 @@ public interface GenericSort<X> {
      * @param from the index of the first element to sort.
      * @param to   the index of the first element not to sort.
      */
-    void sort(X[] xs, int from, int to) ;
+    void sort(X[] xs, int from, int to);
 
     /**
      * Method to take a Collection of X and return an Iterable of X in order.

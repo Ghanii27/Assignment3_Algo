@@ -17,9 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("ALL")
 public class InsertionSortTest {
-
     final static LazyLogger logger = new LazyLogger(InsertionSort.class);
-
     @Test
     public void sort0() throws Exception {
         final List<Integer> list = new ArrayList<>();
@@ -137,5 +135,7 @@ public class InsertionSortTest {
         System.out.println(statPack);
         assertEquals(inversions, fixes);
     }
+
+
 
 }

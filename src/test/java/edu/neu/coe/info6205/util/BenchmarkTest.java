@@ -21,13 +21,14 @@ public class BenchmarkTest {
         int warmups = 0;
         Benchmark<Boolean> bm = new Benchmark_Timer<>(
                 "testWaitPeriods",
-                //b -> {
-           // GoToSleep(100L, -1);
-                null,
+            //GoToSleep(100L, -1);
+            null,
+
                 b -> {
-                    GoToSleep(200L,0 );
+                    GoToSleep(200L, 0);
                 },
-               null);
+                null);
+
         double x = bm.run(true, nRuns);
         assertEquals(nRuns, post);
         assertEquals(nRuns + 2, run);

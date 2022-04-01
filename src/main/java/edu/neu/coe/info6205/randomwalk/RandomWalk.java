@@ -21,7 +21,7 @@ public class RandomWalk {
      */
     private void move(int dx, int dy) {
         // FIXME do move by replacing the following code
-        // throw new RuntimeException("Not implemented");
+       //  throw new RuntimeException("Not implemented");
         x += dx;
         y += dy;
         // END 
@@ -35,25 +35,10 @@ public class RandomWalk {
     private void randomWalk(int m) {
         // FIXME
         int i;
-        for(i=0;i<m;i++){
+        for (i = 0; i < m; i++) {
             randomMove();
+            // END
         }
-//            int a = 0,b = 0,d;
-//            d = random.nextInt()%4;
-//            if (d == 0) {
-//                a = 1;
-//            }
-//            else if (d == 1) {
-//                b = 1;
-//            }
-//            else if (d == 2) {
-//                a = -1;
-//            }
-//            else {
-//                b = -1;
-//            }
-
-        // END 
     }
 
     /**
@@ -73,9 +58,10 @@ public class RandomWalk {
      */
     public double distance() {
         // FIXME
-        double dis;
-        dis = Math.sqrt(x*x + y*y);
-        return dis ;
+            double dis;
+            dis = Math.sqrt(x*x + y*y);
+            return dis ;
+        // END
     }
 
     /**
@@ -96,18 +82,15 @@ public class RandomWalk {
     }
 
     public static void main(String[] args) {
-          // if (args.length == 0)
-         //   throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        //int m = Integer.parseInt(args[0]);
-        int n = 10000;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        for (int i = 1; i<= 6; i++) {
-            int x = new Random().nextInt(200) + 1;
-            for (int j = 0; j < 10; j++) {
-                double meanDistance = randomWalkMulti(x, n);
-                System.out.println(x  + " Steps, Distance from starting point " + meanDistance);
+         int n = 10000;
+            if (args.length > 1) n = Integer.parseInt(args[1]);
+            for (int i = 1; i<= 6; i++) {
+                int x = new Random().nextInt(200) + 1;
+                for (int j = 0; j < 10; j++) {
+                    double meanDistance = randomWalkMulti(x, n);
+                    System.out.println(x + " Steps, Distance from starting point " + meanDistance);
+                }
             }
-        }
     }
 
 }

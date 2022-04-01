@@ -7,11 +7,8 @@ import edu.neu.coe.info6205.sort.BaseHelper;
 import edu.neu.coe.info6205.sort.Helper;
 import edu.neu.coe.info6205.sort.SortWithHelper;
 import edu.neu.coe.info6205.util.Config;
-import org.ini4j.Ini;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 
 public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
@@ -60,39 +57,38 @@ public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
      * @param from the index of the first element to sort
      * @param to   the index of the first element not to sort
      */
-    public void sort(X[] xs, int from, int to)  {
-
-        Boolean instrumenting = false;
-        try{
-           final Config config = Config.load();
+    public void sort(X[] xs, int from, int to) {
+         Boolean instrumenting = false;
+        try {
+            final Config config = Config.load();
             instrumenting = Boolean.valueOf(config.get("helper", "instrument"));
-       }
-       catch(IOException ex){};
-
+        }
+        catch (IOException ex) {} ;
 
         final Helper<X> helper = getHelper();
-        if(instrumenting) {
-
+        if (instrumenting) {
             for (int i = from; i < to; i++) {
                 for (int j = i; j > from; j--) {
-                 Boolean result =  helper.swapStableConditional(xs,j);
-                 if (result==false){break;}
-
+                    Boolean result = helper.swapStableConditional(xs, j);
+                    if (result == false) {
+                        break;
+                    }
                 }
             }
-
+        } else {
+            for (int i = from; i < to; i++)
+                for (int j = i; j > to &&
+                        ((Comparable) xs[j - 1]).compareTo(xs[j]) > 0; j--)
+                    swap(xs, j, j - 1);
         }
-        else {for (int i=from; i<to; i++)
-            for (int j=i; j>to &&
-                    ((Comparable) xs[j-1]).compareTo(xs[j])>0; j--)
-                swap(xs, j, j-1);}
-
     }
-
-    private static void swap(Object[] x, int a, int b) {
+    private static void swap(Object[] x, int a, int b){
         Object t = x[a];
-        x[a] = x[b];
+        x[a] = x [b];
         x[b] = t;
+
+        // FIXME
+        // END 
     }
 
     public static final String DESCRIPTION = "Insertion sort";
